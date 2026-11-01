@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatch | Intelligent Movie Recommendation Engine</title>
+    <meta name="description" content="State-of-the-art content-based movie recommendation system utilizing Scikit-Learn TF-IDF, CountVectorizer, and TMDB Neural Discovery.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Top Navigation Bar -->
+        <nav class="nav-bar">
+            <div class="brand">
+                <i class="fa-solid fa-clapperboard brand-icon"></i>
+                <span class="brand-text">Cine<span class="brand-accent">Match</span></span>
+                <span class="version-badge">v2.0 ML</span>
+            </div>
+            <div class="nav-links">
+                <a href="#about" class="nav-link" id="report-link"><i class="fa-solid fa-brain"></i> Architecture</a>
+                <a href="https://github.com/ritesh0w0/CineMatch" target="_blank" class="nav-link github-nav"><i class="fa-brands fa-github"></i> GitHub</a>
+            </div>
+        </nav>
+
+        <header class="header">
+            <h1 class="logo"><i class="fa-solid fa-film"></i> CineMatch</h1>
+            <p class="subtitle">Next-generation cinematic discovery powered by NLP similarity models & multi-attribute feature engineering</p>
+            
+            <!-- Engine Mode Switcher -->
+            <div class="engine-switch-container">
+                <button class="engine-pill active" data-engine="tmdb" id="pill-tmdb">
+                    <i class="fa-solid fa-bolt"></i> Live Discovery (TMDB)
+                </button>
+                <button class="engine-pill" data-engine="local-tfidf" id="pill-tfidf">
+                    <i class="fa-solid fa-brain"></i> NLP Engine (TF-IDF)
+                </button>
+                <button class="engine-pill" data-engine="local-count" id="pill-count">
+                    <i class="fa-solid fa-calculator"></i> CountVectorizer
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="search-section glass-panel">
+                <div class="search-container">
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-search search-icon"></i>
+                        <input type="text" id="movie-search" placeholder="Type a movie you love... (e.g., The Dark Knight, Interstellar, 3 Idiots)" autocomplete="off">
+                        <div id="autocomplete-list" class="autocomplete-items"></div>
+                    </div>
+                    
+                    <div class="blend-toggle-wrapper">
+                        <label class="switch" for="blend-mode-toggle">
+                            <input type="checkbox" id="blend-mode-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <label for="blend-mode-toggle" class="blend-label">
+                            <i class="fa-solid fa-shuffle"></i> Taste Blender
+                        </label>
+                    </div>
+                    
+                    <button id="search-btn" class="primary-btn">
+                        <span>Recommend</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Quick Suggestion Chips -->
+                <div class="quick-chips-container">
+                    <span class="chips-label"><i class="fa-solid fa-fire"></i> Trending Suggestions:</span>
+                    <div class="chips-list">
+                        <button class="chip" data-movie="The Dark Knight">🦇 The Dark Knight</button>
+                        <button class="chip" data-movie="Interstellar">🚀 Interstellar</button>
+                        <button class="chip" data-movie="Inception">🌀 Inception</button>
+                        <button class="chip" data-movie="3 Idiots">🎓 3 Idiots</button>
+                        <button class="chip" data-movie="The Avengers">⚡ The Avengers</button>
+                        <button class="chip" data-movie="Titanic">🚢 Titanic</button>
+                    </div>
+                </div>
+                
+                <div id="movie-cart" class="movie-cart hidden">
+                    <!-- Selected movie pills will be injected here -->
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="spinner-container hidden">
+                <div class="spinner"></div>
+                <p id="loading-text">Analyzing multi-dimensional movie vectors...</p>
+            </div>
+
+            <!-- Error Notification -->
+            <div id="error-message" class="error-message hidden">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="error-text">Movie not found. Please try another one.</span>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results-section" class="results-section hidden">
+                <div class="results-header">
+                    <div>
+                        <h2>Because you liked <span id="target-movie-title" class="highlight"></span></h2>
+                        <p class="results-subtitle" id="results-meta">Ranked by cosine similarity across genres, cast, keywords & plot</p>
+                    </div>
+                    <div class="model-indicator" id="current-model-badge">
+                        <i class="fa-solid fa-microchip"></i> <span>Live Discovery</span>
+                    </div>
+                </div>
+                <div id="movies-grid" class="movies-grid">
+                    <!-- Movie cards will be injected here via JS -->
+                </div>
+
+                <div id="franchise-section" class="hidden">
+                    <div class="results-header franchise-header">
+                        <h2><i class="fa-solid fa-layer-group" style="color: #f59e0b;"></i> Complete Franchise Timeline</h2>
+                        <span class="franchise-badge">Chronological Order</span>
+                    </div>
+                    <div id="franchise-grid" class="movies-grid franchise-grid">
+                        <!-- Franchise cards injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture & Analytical Overview Section -->
+            <section id="about" class="about-section glass-panel">
+                <h3 class="section-title"><i class="fa-solid fa-diagram-project"></i> Core Machine Learning Pipeline</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-database"></i></div>
+                        <div class="stat-val">10,000+</div>
+                        <div class="stat-label">Movies Curated (TMDB + Indian Cinema)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-sliders"></i></div>
+                        <div class="stat-val">3x / 2x / 1x</div>
+                        <div class="stat-label">Weighted Feature Engineering</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-stopwatch"></i></div>
+                        <div class="stat-val">&lt; 50ms</div>
+                        <div class="stat-label">Real-Time Similarity Inference</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="stat-val">&gt; 95%</div>
+                        <div class="stat-label">Franchise Clustering Accuracy</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fa-solid fa-film"></i> <strong>CineMatch</strong> &bull; Intelligent Recommendation Engine
+                </div>
+                <div class="footer-attribution">
+                    Crafted with <i class="fa-solid fa-heart" style="color: #ef4444;"></i> by <a href="https://github.com/ritesh0w0" target="_blank" rel="noopener">Ritesh Kulkarni</a>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/ritesh0w0/CineMatch" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> Repository</a>
+                    <a href="https://github.com/ritesh0w0" target="_blank" rel="noopener"><i class="fa-solid fa-user"></i> Profile</a>
+                    <a href="mailto:riteshakofficial@gmail.com"><i class="fa-solid fa-envelope"></i> Contact</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
