@@ -368,7 +368,7 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
 <div align="center">
 
-Crafted with ❤️ by **[Ritesh Kulkarni](https://github.com/ritesh0w0)**
+Crafted with ❤️ by **[Ritesh Kulakarni](https://github.com/ritesh0w0)**
 
 [![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?style=flat-square&logo=github)](https://github.com/ritesh0w0)
 [![Email](https://img.shields.io/badge/Email-Contact-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:riteshakofficial@gmail.com)
