@@ -17,6 +17,8 @@ recommender = MovieRecommender()
 @app.route('/')
 def index():
     """Serves the main application landing page."""
+    if os.path.exists('index.html'):
+        return send_from_directory('.', 'index.html')
     return send_from_directory('static', 'index.html')
 
 @app.route('/api/health')

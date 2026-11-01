@@ -5,6 +5,7 @@
 ### **Intelligent Content-Based Movie Recommendation & Discovery Engine**
 
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Live Demo](https://img.shields.io/badge/Demo-Live_on_GitHub_Pages-brightgreen?style=for-the-badge&logo=github)](https://ritesh0w0.github.io/CineMatch/)
 [![Framework](https://img.shields.io/badge/Flask-2.3%2B-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Machine Learning](https://img.shields.io/badge/scikit--learn-1.2%2B-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![API](https://img.shields.io/badge/TMDB-v3_API-01B4E4?style=for-the-badge&logo=themoviedatabase&logoColor=white)](https://developer.themoviedb.org/)
@@ -183,6 +184,10 @@ The combined 10,100+ dataset captures diverse global cinema traditions:
 ---
 
 ## ⚡ Quickstart & Installation
+
+> [!TIP]
+> **Instant Live Demo**: You can try the frontend right now without cloning or installing dependencies: **[https://ritesh0w0.github.io/CineMatch/](https://ritesh0w0.github.io/CineMatch/)**
+> *(TMDB Live Discovery, Multi-Movie Taste Blender, and Franchise Explorer run 100% client-side!)*
 
 ### Prerequisites
 - **Python 3.8+**
@@ -374,3 +379,4 @@ Crafted with ❤️ by **[Ritesh Kulakarni](https://github.com/ritesh0w0)**
 [![Email](https://img.shields.io/badge/Email-Contact-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:riteshakofficial@gmail.com)
 
 </div>
+
